@@ -14,10 +14,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-          registry-url: 'https://npm.pkg.github.com/'
       - name: Configure npm for GitHub Packages
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+        run: |
+          echo "@mAbdelfatah11:registry=https://npm.pkg.github.com/" >> ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
       - run: npm install
+      - run: npm config get @mAbdelfatah11:registry
       - run: npm config get registry
       - run: npm publish
         env:
